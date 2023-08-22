@@ -132,10 +132,48 @@ const confirmar = async ( message ) => {
 }
 
 
+const mostrarListadoCheckList = async ( tareas = [] ) => {
+
+
+    const choices = tareas.map( ( tarea , i) => {
+
+        const idx = `${ i + 1 }.`.green;
+
+        return {
+            value: tarea.id,
+            name: `${ idx} ${ tarea.desc }`,
+            checked: (  tarea.completadoEn ) ? true : false,
+        }         
+    });
+
+    choices.push({
+        value: '0',
+        name: '0. Volver'.green
+    });
+
+    const preguntas = [
+        {
+            type: 'checkbox',
+            name: 'ids',
+            message: 'Completar tarea/s',
+            choices
+        }
+    ]
+
+    const  ids  = inquirer.prompt( preguntas );
+    return ids;
+
+
+
+
+}
+
+
 module.exports = {
     inquirerMenu,
     pausa,
     leerInput,
     listadoTareasBorrar,
-    confirmar
+    confirmar,
+    mostrarListadoCheckList
 }
